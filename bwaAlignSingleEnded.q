@@ -7,10 +7,10 @@
 ## inDir=/scratch/Shares/chuong/cohen2017_chip outDir=/scratch/Users/ativ2716/bam/cohen2017_chip sbatch --array 0-108 bwaAlignSingleEnded.q
 
 # General settings
-#SBATCH -p long
+#SBATCH -p short
 #SBATCH -N 1
 #SBATCH -n 16
-#SBATCH --time=3-00:00
+#SBATCH --time=1-00:00
 #SBATCH --mem=64GB
 
 # Job name and output
