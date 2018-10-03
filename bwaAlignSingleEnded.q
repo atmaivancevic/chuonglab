@@ -36,7 +36,7 @@ module load bwa/0.7.15 samtools/1.8
 # run the thing
 pwd; hostname; date
 
-echo $(date +"[%b %d %H:%M:%S] Starting bwa alignment")
+echo "Starting bwa alignment..."
 echo "Processing file: "${queries[$SLURM_ARRAY_TASK_ID]}
 
 bwa mem -t 8 ${bwaIndexDir}/${bwaIndex} ${inDir}/${queries[$SLURM_ARRAY_TASK_ID]} \

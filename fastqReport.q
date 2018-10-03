@@ -32,7 +32,7 @@ module load fastqc/0.11.5
 # run the thing
 pwd; hostname; date
 
-echo $(date +"[%b %d %H:%M:%S] Starting fastqc")
+echo "Starting fastqc..."
 echo "Processing file: "${queries[$SLURM_ARRAY_TASK_ID]}
 
 fastqc -o ${outDir} -f fastq -t 8 ${inDir}/${queries[$SLURM_ARRAY_TASK_ID]}
