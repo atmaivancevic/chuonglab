@@ -21,7 +21,7 @@
 # Email notifications 
 #SBATCH --mail-type=END                                         
 #SBATCH --mail-type=FAIL                                        
-#SBATCH --mail-user=%u@colorado.edu
+#SBATCH --mail-user=atma.ivancevic@colorado.edu
 
 # define query files
 QUERIES=($(ls $INDIR/*.fastq.gz | xargs -n 1 basename))
