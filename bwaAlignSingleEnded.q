@@ -9,7 +9,7 @@
 # General settings
 #SBATCH -p long
 #SBATCH -N 1
-#SBATCH -n 8
+#SBATCH -n 64
 #SBATCH --time=3-00:00
 #SBATCH --mem=70GB
 
@@ -39,8 +39,8 @@ pwd; hostname; date
 echo "Starting bwa alignment..."
 echo "Processing file: "${queries[$SLURM_ARRAY_TASK_ID]}
 
-bwa mem -t 8 ${bwaIndexDir}/${bwaIndex} ${inDir}/${queries[$SLURM_ARRAY_TASK_ID]} \
+bwa mem -t 64 ${bwaIndexDir}/${bwaIndex} ${inDir}/${queries[$SLURM_ARRAY_TASK_ID]} \
 | samtools view -Sb -q 10 - \
-> ${outDir}/${queries[$SLURM_ARRAY_TASK_ID]}.uniq.bam
+> ${outDir}/${queries[$SLURM_ARRAY_TASK_ID]%.fastq.gz}.uniq.bam
 
 echo $(date +"[%b %d %H:%M:%S] Done!")
