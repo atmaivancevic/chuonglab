@@ -4,14 +4,14 @@
 ## Date: 3 Oct 2018 
 ##
 ## Example usage:
-## treatment=/scratch/Users/ativ2716/bam/cohen2017_chip/V411_treatment.uniq.bam control=/scratch/Users/ativ2716/bam/cohen2017_chip/V411_control.uniq.bam name=V411_test genome=hs sbatch callPeaks.q
+## inDir=/scratch/Users/ativ2716/bam/cohen2017_chip outDir=/scratch/Users/ativ2716/bedgraph/cohen2017_chip name=V411 chipFile=SRR3157792_1.uniq.bam controlFile=SRR3157865_1.uniq.bam genome=hs sbatch callPeaks.q
 
 # General settings
 #SBATCH -p short
 #SBATCH -N 1
 #SBATCH -n 16
-#SBATCH --time=1-00:00
-#SBATCH --mem=64GB
+#SBATCH --time=3:00:00
+#SBATCH --mem=8GB
 
 # Job name and output
 #SBATCH -J macs2-call
@@ -30,9 +30,9 @@ module load python/2.7.14/MACS/2.1.1
 pwd; hostname; date
 
 echo "Starting macs2 peak calling..."
-echo "Processing chip file: "$treatment
-echo "Control: "$control
-echo "Name: "$name
+echo "Processing chip library: "$name
+echo "Treatment file: "$chipFile
+echo "Control file: "$controlFile
 echo "Genome: "$genome
 
 # --SPMR and -B are to make a normalized bedgraph file
@@ -43,7 +43,7 @@ echo "Genome: "$genome
 #                                        'ce' for C. elegans (9e7), 
 #                                        'dm' for fruitfly (1.2e8).
 
-macs2 callpeak -t $treatment -c $control -n $name  -g $genome --SPMR -B
+macs2 callpeak -t $inDir/$chipFile -c $inDir/$controlFile -n $name  -g $genome --SPMR -B --outdir $outDir
 
 # use "-f BAMPE" if using paired end data
 
