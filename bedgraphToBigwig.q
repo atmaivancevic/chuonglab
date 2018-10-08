@@ -11,7 +11,7 @@
 #SBATCH -N 1
 #SBATCH -n 16
 #SBATCH --time=6:00:00
-#SBATCH --mem=8GB
+#SBATCH --mem=32GB
 
 # Job name and output
 #SBATCH -J bedgraphToBigwig
