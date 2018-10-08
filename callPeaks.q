@@ -5,6 +5,7 @@
 ##
 ## Example usage:
 ## inDir=/scratch/Users/ativ2716/bam/cohen2017_chip outDir=/scratch/Users/ativ2716/bedgraph/cohen2017_chip name=V411.h3k27ac.uniq chipFile=SRR3157792_1.uniq.bam controlFile=SRR3157865_1.uniq.bam genome=hs sbatch callPeaks.q
+
 # General settings
 #SBATCH -p short
 #SBATCH -N 1
