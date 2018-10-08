@@ -41,7 +41,7 @@ echo $(date +"[%b %d %H:%M:%S] Converting sorted bedgraph to bigwig...")
 
 bedGraphToBigWig ${outDir}/${queries[$SLURM_ARRAY_TASK_ID]%.bdg}.sorted.bdg $chromSizesFile ${outDir}/${queries[$SLURM_ARRAY_TASK_ID]%.bdg}.bw
 
-echo $(date +"[%b %d %H:%M:%S] Removing sorted bedgraph")
+echo $(date +"[%b %d %H:%M:%S] Removing sorted bedgraph...")
 
 rm ${outDir}/${queries[$SLURM_ARRAY_TASK_ID]%.bdg}.sorted.bdg
 
