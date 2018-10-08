@@ -9,9 +9,9 @@
 # General settings
 #SBATCH -p short
 #SBATCH -N 1
-#SBATCH -n 16
-#SBATCH --time=6:00:00
-#SBATCH --mem=8GB
+#SBATCH -n 1
+#SBATCH --time=1:00:00
+#SBATCH --mem=1GB
 
 # Job name and output
 #SBATCH -J hubload
