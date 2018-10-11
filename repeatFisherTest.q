@@ -9,9 +9,9 @@
 # General settings
 #SBATCH -p short
 #SBATCH -N 1
-#SBATCH -n 2
+#SBATCH -c 1
 #SBATCH --time=1:00:00
-#SBATCH --mem=1GB
+#SBATCH --mem=8GB
 
 # Job name and output
 #SBATCH -J repeatFisher
@@ -30,7 +30,7 @@ genomeAssembly="hg38" # hg38, hg19, mm10, mm9 on /scratch/Shares/chuong
 module load python/2.7.14/pybedtools/0.7.8 python/2.7.14/pandas/0.18.1 bedtools/2.25.0
 
 # define query files
-queries=($(ls $inDir/*_summits.bed | xargs -n 1 basename))
+queries=($(ls $inDir/*.narrowPeak | xargs -n 1 basename))
 
 # run the thing
 pwd; hostname; date
@@ -38,7 +38,6 @@ pwd; hostname; date
 echo "Processing file: "${queries[$SLURM_ARRAY_TASK_ID]}
 echo $(date +"[%b %d %H:%M:%S] Running Fisher enrichment test...")
 
-bed_repeat_enrichment_fisher.py -s $genomeAssembly -i ${inDir}/${queries[$SLURM_ARRAY_TASK_ID]} -p 60 \
-> ${outDir}/${queries[$SLURM_ARRAY_TASK_ID]%_summits.bed}.repFish.txt
+bed_repeat_enrichment_fisher.py -s $genomeAssembly -i ${inDir}/${queries[$SLURM_ARRAY_TASK_ID]} -p 60 > ${outDir}/${queries[$SLURM_ARRAY_TASK_ID]%.narrowPeak}.repFish.txt
 
 echo $(date +"[%b %d %H:%M:%S] Done!")
