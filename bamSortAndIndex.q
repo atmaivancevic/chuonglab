@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## Script for aligning single-ended fastq files
+## Script for sorting and indexing bam files
 ## Date: 3 Oct 2018 
 ##
 ## Example usage:
