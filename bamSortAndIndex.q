@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## Script for sorting and indexing bam files
-## Date: 3 Oct 2018 
+## Date: 15 Oct 2018 
 ##
 ## Example usage:
 ## inDir=/scratch/Users/ativ2716/bam/cohen2017_chip/treatment sbatch --array 0-31 bamSortAndIndex.q
