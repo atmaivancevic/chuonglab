@@ -35,9 +35,7 @@ head(countdata)
 
 library("DESeq2")
 
-dds <- DESeqDataSetFromMatrix(countData = countdata,
-                              colData = coldata,
-                              design = ~ condition)
+dds <- DESeqDataSetFromMatrix(countData = countdata, colData = coldata, design = ~ condition)
 
 dds
 dds$condition <- relevel(dds$condition, ref = "control")
@@ -57,6 +55,64 @@ res_cancer_vs_control <- res_cancer_vs_control[order(res_cancer_vs_control$padj)
 table(res_cancer_vs_control$padj<0.05)
 
 plotMA(res_cancer_vs_control, ylim=c(-10,10))
+
+##############################################################################
+
+# Lets make a volcano plot
+
+padj <- res_cancer_vs_control[,c(6)]
+head(padj)
+hist(padj)
+
+hist(-log10(padj))
+
+log2FoldChange <- res_cancer_vs_control[,c(2)]
+hist(log2FoldChange)
+
+new <- res_cancer_vs_control[,c(2,6)]
+head(new)
+new = as.data.frame(new)
+new$probename <- rownames(new)
+head(new)
+
+# Get ggplot ready
+
+#install.packages("ggplot2")
+library(ggplot2)
+#install.packages("ggrepel")
+library(ggrepel)
+
+# Separate data into three subsets
+
+value1 = subset(new, padj<0.00005 & abs(log2FoldChange)<4)
+value2 = subset(new, padj>0.00005 & abs(log2FoldChange)>4)
+value3 = subset(new, padj<0.00005 & abs(log2FoldChange)>4)
+
+# these subsets are for the text labels 
+value4 = subset(new, padj<0.000000000005 & abs(log2FoldChange)>3.5)
+value4
+value5 = subset(new, abs(log2FoldChange)>7)
+value5
+
+ggplot(new, aes(log2FoldChange, -log10(padj)), colour="grey") +
+  scale_color_discrete(name = 'Labels') +
+  theme_bw() + 
+  ggtitle("Volcano plot") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  labs(y="-log10 adjusted pvalue", x = "log2 fold change") +
+  # Set all dots color to grey
+  geom_point(data=new, colour = "grey") + 
+  # If pvalue<0.05, change dot color to green
+  geom_point(data=new[which(new $padj <0.00005),], colour = "springgreen2") + 
+  # If log2FC >1, change dot color to orange
+  geom_point(data=new[which(abs(new$log2FoldChange)>4),], colour = "darkgoldenrod1") +
+  # If both, change dot color to blue
+  geom_point(data=new[which(abs(new $log2FoldChange)>4 & new$padj<0.00005),], colour = "royalblue1") +
+  # Add text label for interesting outliers
+  geom_text_repel(data = value4, mapping = aes(log2FoldChange, -log10(padj), label = rownames(value4)),size = 2.5,force = 1) +
+  geom_text_repel(data = value5, mapping = aes(log2FoldChange, -log10(padj), label = rownames(value5)),size = 2.5,force = 1)
+   
+################################################################################
 
 # extract only baseMean less than 10
 res_cancer_vs_control_baseMean <- subset(res_cancer_vs_control, baseMean < 10)
@@ -90,6 +146,3 @@ plotMA(res_cancer_vs_control_padj, ylim=c(-10,10))
 res_cancer_vs_control_highFCandhighMean <- subset(res_cancer_vs_control, abs(log2FoldChange) > 1 & baseMean > 7000)
 plotMA(res_cancer_vs_control_highFCandhighMean, ylim=c(-10,10))
 res_cancer_vs_control_highFCandhighMean
-
-
-
