@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Basic usage: ./heatmap.py -s states.txt -c cells.txt -i input.txt --stat=combo -o out.pdf [--state_names short_states.txt]
+# Basic usage:  ~/repos/chuonglab/heatmap.py -s states.txt -c cells.txt -i input.txt --stat=combo -o out.pdf [--state_names short_states.txt]
 
 # Adapted from Ryan Layer's giggle heatmap example
 # (https://github.com/ryanlayer/giggle/blob/master/scripts/giggle_heat_map.py)
