@@ -41,9 +41,15 @@ test$group <- as.factor(test$group)
 test
 
 library(ggplot2)
+#install.packages("ggpubr")
+library(ggpubr)
 
-ggplot(test, aes(x=group, y=log10(score), fill=group)) + geom_boxplot() + geom_jitter(shape=16, position=position_jitter(0), size=3) + ggtitle("LTR10A") + theme(plot.title = element_text(hjust = 0.5, size=15), axis.text=element_text(size=10)) + labs(y="log10 (giggle score)", x = "group") 
+all_comparisons <- list( c("control", "crc"), c("crc", "tumour"), c("control","tumour") )
+all_comparisons
 
+control_cancer <- list( c("control", "crc"))
+
+ggplot(test, aes(x=group, y=log10(score), fill=group)) + geom_boxplot() + geom_jitter(shape=16, position=position_jitter(0), size=3) + ggtitle("LTR10A") + theme(plot.title = element_text(hjust = 0.5, size=15), axis.text=element_text(size=10)) + labs(y="log10 (giggle score)", x = "group") + stat_compare_means(comparisons = all_comparisons, method = "t.test", label = "p.signif")
 
 ##########################################################
 # Or could make a scatterplot
@@ -97,14 +103,3 @@ theme(plot.title = element_text(hjust = 0.5)) +
 geom_point(data=new3[which(new3$condition == 1),], colour = "royalblue1", stroke=2, size=1)  +
 geom_point(data=new3[which(new3$condition == 2),], colour = "red", stroke=2, size=1) +
 geom_point(data=new3[which(new3$condition == 3),], colour = "orange", stroke=2, size=1) 
-
-
-
-
-
-
-
-
-
-
-
