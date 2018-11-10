@@ -29,9 +29,8 @@ pwd; hostname; date
 cd $inDir
 
 for i in $(cat repeats.txt); 
-do 	
-	echo $i; 
-	giggle search -i ../eachRep_index/"$i"_index -q $inFile -s; 
-done > ${inFile%.broadPeak.bed.gz}.giggleStats
+do
+	giggle search -i /Users/ativ2716/testing/eachRep_index/"$i"_index -q $inFile -s; 
+done > ${inFile%.bed.gz}.giggleStats
 
 echo $(date +"[%b %d %H:%M:%S] Done!")
