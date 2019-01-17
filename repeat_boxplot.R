@@ -12,10 +12,7 @@ args = commandArgs(trailingOnly=TRUE)
 # args[2] = repeat of interest
 # args[3] = output file name
 
-setwd("~/Documents/giggleScoreMatrices/")
-giggleScore <- read.table(args[1], sep="\t", header = FALSE, row.names=1)
-
-colnames(giggleScore) <- c("c28","c29","c37","crypt5","CRC17A","CRC23A","CRC6A","CRC7A","HCT116","SW480","COLO205","V1009","V1024","V1051","V1058","V1074","V1106","V206","V389","V410","V411","V429","V456","V481","V576","V5","V784","V852","V855","V866","V940","V968")
+giggleScore <- read.table(args[1], sep="\t", header = TRUE, row.names=1)
 
 # set to the repeat of interest
 ervName = args[2]
@@ -26,7 +23,7 @@ ervRes <- t(ervRes)
 ervRes
 
 # Assign control vs tumour vs test
-condition <- factor(c(rep("control", 4), rep("tumour", 4), rep("crc", 24)))
+condition <- factor(c(rep("control", 7), rep("cancer", 32), rep("tumour", 4)))
 condition <- data.frame(condition)
 
 test <- cbind(ervRes, condition)
@@ -35,7 +32,8 @@ colnames(test) <- c("score", "group")
 
 test$group <- as.factor(test$group)
 
-all_comparisons <- list( c("control", "crc"), c("crc", "tumour"), c("control","tumour") )
+all_comparisons <- list( c("control", "cancer"), c("control","tumour"), c("cancer", "tumour") )
+#all_comparisons
 
 png(file = args[3], width = 6, height = 6, units = 'in', res = 300)
 
